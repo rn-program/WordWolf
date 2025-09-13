@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WordWolf</title>
+    <style>
+    </style>
+</head>
+
+<body>
+    <div>
+        <input id="number" type="number" min="3" max="8" value="4">
+        <button id="decide" onclick="number()">決定</button>
+    </div>
+    <form id="member-btn" action="/member" method="post"></form>
+
+    <script>
+        function number() {
+            let member_btn = document.getElementById("member-btn");
+            let t_number = document.getElementById("number").value;
+            let number = Number(t_number);
+            member_btn.innerHTML = "";
+            for (i=1; i<=number; i++) {
+                let name_btn = document.createElement("input");
+                name_btn.name = "name";
+                name_btn.type = "text";
+                name_btn.placeholder = "名前を入力";
+                member_btn.appendChild(name_btn)
+            }
+            let submit_btn = document.createElement("button");
+            submit_btn.type = "submit";
+            submit_btn.textContent = "決定";
+            member_btn.appendChild(submit_btn)
+        }
+    </script>
+</body>
+
+</html>

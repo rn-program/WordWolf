@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WordWolf</title>
+    <style>
+        #turn {
+            position: absolute;
+            top: 5%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 4vw;
+            text-align: center;
+        }
+
+        #topic {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3vw;
+            text-align: center;
+        }
+
+        #next_btn {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 3vw;
+            text-align: center;
+        }
+    </style>
+</head>
+<!-- VSCodeのエラー表示対策のため、scriptタグ外でjinja2を使用し、それを読み込む -->
+
+<body data-members='{{ members | tojson }}'>
+    <h2 id="turn">※お題が表示されます</h2>
+    <p id="topic"></p>
+    <button id="next_btn" onclick="topic()">表示</button>
+
+    <script>
+        // お題一覧 (app.pyと連動)
+        const topic_list = [
+            ["りんご", "みかん"],
+            ["犬", "猫"],
+            ["学校", "図書館"],
+            ["電車", "バス"],
+            ["ピザ", "ハンバーガー"],
+            ["海", "川"],
+            ["サッカー", "バスケ"],
+            ["春", "秋"],
+            ["コーヒー", "紅茶"],
+            ["車", "バイク"],
+            ["パン", "ご飯"],
+            ["ピアノ", "ギター"],
+            ["スイカ", "メロン"],
+            ["ねこ", "ねずみ"],
+            ["犬小屋", "猫ハウス"],
+            ["鉛筆", "ペン"],
+            ["リンゴジュース", "オレンジジュース"],
+            ["自転車", "キックボード"],
+            ["映画館", "カラオケ"],
+            ["タクシー", "電車"],
+            ["チョコレート", "キャンディ"],
+            ["砂浜", "山"],
+            ["春巻き", "餃子"],
+            ["テレビ", "ラジオ"],
+            ["ケーキ", "クッキー"],
+            ["トマト", "きゅうり"],
+            ["橋", "トンネル"],
+            ["机", "椅子"],
+            ["パソコン", "スマホ"],
+            ["山登り", "ハイキング"],
+            ["ビール", "ワイン"],
+            ["ネクタイ", "スカーフ"],
+            ["かばん", "リュック"],
+            ["青空", "夕焼け"],
+            ["雨", "雪"],
+            ["時計", "カレンダー"],
+            ["飛行機", "船"],
+            ["サングラス", "メガネ"],
+            ["筆箱", "教科書"],
+            ["犬の散歩", "猫の餌やり"],
+            ["バナナ", "オレンジ"],
+            ["ラーメン", "うどん"],
+            ["自動販売機", "コンビニ"]
+        ];
+
+
+        const name_list = JSON.parse(document.body.dataset.members);
+        const randomMember = Math.floor(Math.random() * name_list.length); // ランダムにWolfの人のindex番号を決める
+        const randomTopic = Math.floor(Math.random() * topic_list.length); // ランダムにWolfの人のindex番号を決める
+        const turn_name = document.getElementById("turn");
+        const topic_content = document.getElementById("topic");
+        let index = 0;
+
+        function topic() {
+            if (index < name_list.length) {
+                turn_name.textContent = name_list[index] + "さんのお題は";
+                // 人狼の時
+                if (index == randomMember) {
+                    alert("※お題を表示します")
+                    topic_content.textContent = topic_list[randomTopic][1]
+                    index++
+                }
+                // 市民の時
+                else {
+                    alert("※お題を表示します")
+                    topic_content.textContent = topic_list[randomTopic][0]
+                    index++
+                }
+            }
+            else {
+                location.href = `/game?member_index=${randomMember}&topic_index=${randomTopic}`
+            }
+        }
+    </script>
+</body>
+
+</html>

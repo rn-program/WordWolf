@@ -5,15 +5,47 @@
     <meta charset="UTF-8">
     <title>WordWolf</title>
     <style>
+        #WordWolf {
+            color: aquamarine;
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 6vw;
+            text-align: center;
+        }
+        #number-btn {
+            position: absolute;
+            top: 30%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 6vw;
+            text-align: center;
+        }
+        #member-btn {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 6vw;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <div>
+    <h1 id="WordWolf">ワードウルフ</h1>
+    <div id="number-btn">
         <input id="number" type="number" min="3" max="8" value="4">
         <button id="decide" onclick="number()">決定</button>
     </div>
     <form id="member-btn" action="/member" method="post"></form>
+    <a href="/study">沖縄戦の概要</a>
 
     <script>
         function number() {
@@ -21,8 +53,9 @@
             let t_number = document.getElementById("number").value;
             let number = Number(t_number);
             member_btn.innerHTML = "";
-            for (i=1; i<=number; i++) {
+            for (i = 1; i <= number; i++) {
                 let name_btn = document.createElement("input");
+                name_btn.classList = "input-name"
                 name_btn.name = "name";
                 name_btn.type = "text";
                 name_btn.placeholder = "名前を入力";

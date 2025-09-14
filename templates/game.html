@@ -5,12 +5,34 @@
     <meta charset="UTF-8">
     <title>game開始</title>
     <style>
+        #talking {
+            color: rgb(236, 60, 37);
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 6vw;
+            text-align: center;
+        }
+        #toResult {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            width: 15vw;
+            height: 6vh;
+            transform: translateX(-50%);
+            font-size: 3vw;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
-    <h1>話し合い開始</h1>
-    <button onclick="location.href='/result'">結果画面</button>
+    <h1 id="talking">話し合い開始</h1>
+    <button id="toResult" onclick="location.href='/result'">結果画面</button>
+    <a href="/study">沖縄戦の概要</a>
 </body>
 
 </html>

@@ -1,16 +1,86 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>結果</title>
+    <style>
+        h1 {
+            position: absolute;
+            top: 3%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 6vw;
+            text-align: center;
+        }
+
+        h2 {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 4vw;
+            text-align: center;
+        }
+
+        #wolf {
+            position: absolute;
+            top: 22%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 3vw;
+            text-align: center;
+        }
+
+        h3 {
+            position: absolute;
+            top: 31%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 4vw;
+            text-align: center;
+        }
+
+        #topic {
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 3vw;
+            text-align: center;
+        }
+
+        #home {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            width: 45vw;
+            height: 10vh;
+            transform: translateX(-50%);
+            font-size: 3vw;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
     <h1>結果発表</h1>
-    <h2>人狼</h2>
-    <p>人狼: {{who_wolf}}</p>
-    <p>お題: {{wolf}}</p>
-    <h2>市民</h2>
-    <p>お題: {{normal}}</p>
-    <button onclick="location.href='/'">ホーム画面に戻る</button>
+    <h2>人狼:</h2>
+    <p style="color: red;" id="wolf">{{who_wolf}}<br>お題: {{wolf}}</p>
+    <h3>市民:</h2>
+        <p style="color: red;" id="topic">お題: {{normal}}</p>
+        <button id="home" onclick="location.href='/'">ホーム画面に戻る</button>
+        <a href="/study">沖縄戦の概要</a>
 </body>
+
 </html>

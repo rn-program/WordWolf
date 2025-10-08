@@ -69,22 +69,6 @@
             transform: scale(1.1);
         }
 
-        /* 入力フィールドのスタイリング */
-        input[type="number"], input[type="text"] {
-            padding: 10px;
-            font-size: 2vw;
-            margin: 5px;
-            border-radius: 5px;
-            border: 2px solid #fff;
-            background-color: rgba(255, 255, 255, 0.3);
-            color: white;
-        }
-
-        input[type="number"]:focus, input[type="text"]:focus {
-            outline: none;
-            border-color: #2ecc71;
-        }
-
         /* アニメーション */
         @keyframes fadeIn {
             0% { opacity: 0; }
@@ -120,9 +104,6 @@
             #next_btn, #decide, #toResult, button {
                 font-size: 4vw;
             }
-            input[type="number"], input[type="text"] {
-                font-size: 4vw;
-            }
         }
     </style>
 </head>
@@ -130,12 +111,6 @@
 <body>
     <h1 id="WordWolf">ワードウルフ</h1>
     
-    <div id="number-btn">
-        <input id="number" type="number" min="3" max="8" value="4">
-        <button id="decide" onclick="number()">決定</button>
-    </div>
-    <form id="member-btn" action="/member" method="post"></form>
-
     <h2 id="turn">ターン開始</h2>
     <p id="topic">お題がここに表示されます</p>
 
@@ -144,25 +119,6 @@
     <a href="/study">沖縄戦の概要</a>
 
     <script>
-        function number() {
-            let member_btn = document.getElementById("member-btn");
-            let t_number = document.getElementById("number").value;
-            let number = Number(t_number);
-            member_btn.innerHTML = "";
-            for (let i = 1; i <= number; i++) {
-                let name_btn = document.createElement("input");
-                name_btn.classList = "input-name"
-                name_btn.name = "name";
-                name_btn.type = "text";
-                name_btn.placeholder = "名前を入力";
-                member_btn.appendChild(name_btn);
-            }
-            let submit_btn = document.createElement("button");
-            submit_btn.type = "submit";
-            submit_btn.textContent = "決定";
-            member_btn.appendChild(submit_btn);
-        }
-
         const topic_list = [["りんご", "みかん"],
             ["犬", "猫"],
             ["学校", "図書館"],
@@ -276,7 +232,7 @@
             ["メール", "手紙"],
             ["スーツ", "作業着"],
             ["電卓", "そろばん"],
-            ["ブランコ", "すべり台"],
+                                        ["ブランコ", "すべり台"],
             ["牛", "馬"],
             ["月", "太陽"],
             ["焼き鳥", "唐揚げ"],
@@ -305,9 +261,9 @@
             ["手袋", "軍手"],
             ["お城", "神社"],
             ["サンドバッグ", "ダンベル"]
-            ];
+        ];
 
-        const name_list = JSON.parse(document.body.dataset.members);
+        const name_list = JSON.parse(document.body.dataset.members || '["プレイヤー1"]');  // メンバーリストを設定。データがない場合はデフォルトで1人を設定
         const randomMember = Math.floor(Math.random() * name_list.length);
         const randomTopic = Math.floor(Math.random() * topic_list.length);
         const turn_name = document.getElementById("turn");

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>WordWolf</title>
+    <style>
+        /* 基本設定 */
+        body {
+            background: linear-gradient(45deg, #8e44ad, #3498db);
+            font-family: 'Arial', sans-serif;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        h1, h2, p {
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 5vw;
+            margin: 20px;
+        }
+
+        h2 {
+            font-size: 4vw;
+            margin: 20px;
+        }
+
+        /* お題とターン表示 */
+        #turn {
+            font-size: 3vw;
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        #topic {
+            font-size: 4vw;
+            color: #e74c3c;
+            text-align: center;
+            margin-top: 30px;
+            animation: slideUp 1s ease-in-out;
+        }
+
+        /* ボタンのデザイン */
+        #next_btn, #decide, #toResult, button {
+            background-color: #2ecc71;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 2.5vw;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s ease-in-out;
+            margin: 10px;
+        }
+
+        /* ボタンのホバー時 */
+        #next_btn:hover, #decide:hover, #toResult:hover, button:hover {
+            background-color: #27ae60;
+            transform: scale(1.1);
+        }
+
+        /* 入力フィールドのスタイリング */
+        input[type="number"], input[type="text"] {
+            padding: 10px;
+            font-size: 2vw;
+            margin: 5px;
+            border-radius: 5px;
+            border: 2px solid #fff;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        input[type="number"]:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #2ecc71;
+        }
+
+        /* アニメーション */
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* リンク */
+        a {
+            text-decoration: none;
+            color: #ecf0f1;
+            font-size: 1.5vw;
+            margin-top: 30px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #2ecc71;
+        }
+
+        /* レスポンシブ対応 */
+        @media screen and (max-width: 768px) {
+            h1, h2 {
+                font-size: 6vw;
+            }
+            #turn, #topic {
+                font-size: 5vw;
+            }
+            #next_btn, #decide, #toResult, button {
+                font-size: 4vw;
+            }
+            input[type="number"], input[type="text"] {
+                font-size: 4vw;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1 id="WordWolf">ワードウルフ</h1>
+    
+    <div id="number-btn">
+        <input id="number" type="number" min="3" max="8" value="4">
+        <button id="decide" onclick="number()">決定</button>
+    </div>
+    <form id="member-btn" action="/member" method="post"></form>
+
+    <h2 id="turn">ターン開始</h2>
+    <p id="topic">お題がここに表示されます</p>
+
+    <button id="next_btn" onclick="topic()">次へ</button>
+
+    <a href="/study">沖縄戦の概要</a>
+
+    <script>
+        function number() {
+            let member_btn = document.getElementById("member-btn");
+            let t_number = document.getElementById("number").value;
+            let number = Number(t_number);
+            member_btn.innerHTML = "";
+            for (let i = 1; i <= number; i++) {
+                let name_btn = document.createElement("input");
+                name_btn.classList = "input-name"
+                name_btn.name = "name";
+                name_btn.type = "text";
+                name_btn.placeholder = "名前を入力";
+                member_btn.appendChild(name_btn);
+            }
+            let submit_btn = document.createElement("button");
+            submit_btn.type = "submit";
+            submit_btn.textContent = "決定";
+            member_btn.appendChild(submit_btn);
+        }
+
+        const topic_list = [
+            ["りんご", "みかん"],
+            ["犬", "猫"],
+            ["学校", "図書館"],
+            // ...省略
+        ];
+
+        const name_list = JSON.parse(document.body.dataset.members);
+        const randomMember = Math.floor(Math.random() * name_list.length);
+        const randomTopic = Math.floor(Math.random() * topic_list.length);
+        const turn_name = document.getElementById("turn");
+        const topic_content = document.getElementById("topic");
+        let index = 0;
+
+        function topic() {
+            if (index < name_list.length) {
+                turn_name.textContent = (name_list[index] || "プレーヤー" + (Number(index) + 1)) + "さんのお題は";
+                if (index == randomMember) {
+                    topic_content.textContent = topic_list[randomTopic][1];
+                } else {
+                    topic_content.textContent = topic_list[randomTopic][0];
+                }
+                index++;
+            } else {
+                location.href = `/game?member_index=${randomMember}&topic_index=${randomTopic}`;
+            }
+        }
+    </script>
+</body>
+
+</html>
